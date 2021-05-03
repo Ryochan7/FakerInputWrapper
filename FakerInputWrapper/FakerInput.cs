@@ -1,0 +1,108 @@
+﻿using System;
+using System.Runtime.InteropServices;
+using System.Security;
+
+namespace FakerInputWrapper
+{
+    using PFAKERINPUT_HANDLE = IntPtr;
+
+    [SuppressUnmanagedCodeSecurity]
+    public class FakerInput
+    {
+        [DllImport("FakerInputDll.dll")]
+        public static extern IntPtr fakerinput_alloc();
+
+        [DllImport("FakerInputDll.dll")]
+        public static extern void fakerinput_free(PFAKERINPUT_HANDLE vmulti);
+
+        [DllImport("FakerInputDll.dll")]
+        public static extern bool fakerinput_connect(PFAKERINPUT_HANDLE vmulti);
+
+        [DllImport("FakerInputDll.dll")]
+        public static extern void fakerinput_disconnect(PFAKERINPUT_HANDLE vmulti);
+
+        [DllImport("FakerInputDll.dll")]
+        public static extern bool fakerinput_update_keyboard(PFAKERINPUT_HANDLE vmulti, byte shiftKeyFlags, byte[] keyCodes);
+
+        [DllImport("FakerInputDll.dll")]
+        public static extern bool fakerinput_update_keyboard_enhanced(PFAKERINPUT_HANDLE vmulti, byte mediaKeys, byte enhancedKeys);
+
+        [DllImport("FakerInputDll.dll")]
+        public static extern bool fakerinput_update_relative_mouse(PFAKERINPUT_HANDLE clientHandle, byte button,
+            short x, short y, byte wheelPosition, byte hWheelPosition);
+
+        private PFAKERINPUT_HANDLE deviceHandle;
+        private bool connected;
+
+        public FakerInput()
+        {
+            deviceHandle = fakerinput_alloc();
+        }
+
+        public bool IsConnected()
+        {
+            return connected;
+        }
+
+        public bool Connect()
+        {
+            return this.connected = fakerinput_connect(deviceHandle);
+        }
+
+        public void Disconnect()
+        {
+            if (connected)
+            {
+                fakerinput_disconnect(deviceHandle);
+            }
+        }
+
+        public void Free()
+        {
+            if (deviceHandle != PFAKERINPUT_HANDLE.Zero)
+            {
+                fakerinput_free(deviceHandle);
+                deviceHandle = PFAKERINPUT_HANDLE.Zero;
+            }
+        }
+
+        public bool UpdateKeyboard(KeyboardReport report)
+        {
+            if (connected)
+            {
+                return fakerinput_update_keyboard(deviceHandle,
+                    report.GetRawShiftKeyFlags(), report.GetRawKeyCodes());
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool UpdateKeyboardEnhanced(KeyboardEnhancedReport report)
+        {
+            if (connected)
+            {
+                return fakerinput_update_keyboard_enhanced(deviceHandle,
+                    (byte)report.MediaKeys, (byte)report.EnhancedKeys);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool UpdateRelativeMouse(RelativeMouseReport report)
+        {
+            if (connected)
+            {
+                return fakerinput_update_relative_mouse(deviceHandle, (byte)report.Buttons,
+                    report.MouseX, report.MouseY, report.WheelPosition, report.HWheelPosition);
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+}
