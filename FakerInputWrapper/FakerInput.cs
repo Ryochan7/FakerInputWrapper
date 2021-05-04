@@ -83,8 +83,11 @@ namespace FakerInputWrapper
         {
             if (connected)
             {
+                //return fakerinput_update_keyboard_enhanced(deviceHandle,
+                //    (byte)report.MediaKeys, (byte)report.EnhancedKeys);
                 return fakerinput_update_keyboard_enhanced(deviceHandle,
-                    (byte)report.MediaKeys, (byte)report.EnhancedKeys);
+                    (byte)(report.EnhancedKeysUShort >> 8),
+                    (byte)report.EnhancedKeys);
             }
             else
             {

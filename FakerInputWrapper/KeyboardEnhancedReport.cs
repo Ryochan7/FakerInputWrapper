@@ -7,23 +7,10 @@ using System.Threading.Tasks;
 namespace FakerInputWrapper
 {
     [Flags]
-    public enum MultimediaKey : byte
+    public enum EnhancedKey : ushort
     {
         None,
-        ScanNextTrack = 1 << 0,
-        ScanPreviousTrack = 1 << 1,
-        Stop = 1 << 2,
-        PlayPause = 1 << 3,
-        Mute = 1 << 4,
-        VolumeDown = 1 << 5,
-        VolumeUp = 1 << 6,
-        WWWHome = 1 << 7,
-    }
-
-    [Flags]
-    public enum EnhancedKey : byte
-    {
-        None,
+        // Enhanced keys
         MyComputer = 1 << 0,
         Calculator = 1 << 1,
         WWWFav = 1 << 2,
@@ -32,15 +19,29 @@ namespace FakerInputWrapper
         WWWBack = 1 << 5,
         MediaSelect = 1 << 6,
         Mail = 1 << 7,
+
+        // Multimedia keys
+        ScanNextTrack = 1 << 8,
+        ScanPreviousTrack = 1 << 9,
+        Stop = 1 << 10,
+        PlayPause = 1 << 11,
+        Mute = 1 << 12,
+        VolumeDown = 1 << 13,
+        VolumeUp = 1 << 14,
+        WWWHome = 1 << 15,
     }
 
     public class KeyboardEnhancedReport
     {
         private EnhancedKey enhancedKeys;
-        private MultimediaKey mediaKeys;
+        //private MultimediaKey mediaKeys;
 
         public EnhancedKey EnhancedKeys { get => enhancedKeys; set => enhancedKeys = value; }
-        public MultimediaKey MediaKeys { get => mediaKeys; set => mediaKeys = value; }
+        public ushort EnhancedKeysUShort
+        {
+            get => (ushort)enhancedKeys; set => enhancedKeys = (EnhancedKey)value;
+        }
+        //public MultimediaKey MediaKeys { get => mediaKeys; set => mediaKeys = value; }
 
         public void KeyDown(EnhancedKey enhancedKey)
         {
@@ -52,20 +53,20 @@ namespace FakerInputWrapper
             enhancedKeys &= ~enhancedKey;
         }
 
-        public void KeyDown(MultimediaKey multiKey)
-        {
-            mediaKeys |= multiKey;
-        }
+        //public void KeyDown(MultimediaKey multiKey)
+        //{
+        //    mediaKeys |= multiKey;
+        //}
 
-        public void KeyUp(MultimediaKey multiKey)
-        {
-            mediaKeys &= ~multiKey;
-        }
+        //public void KeyUp(MultimediaKey multiKey)
+        //{
+        //    mediaKeys &= ~multiKey;
+        //}
 
         public void Reset()
         {
             enhancedKeys = 0;
-            mediaKeys = 0;
+            //mediaKeys = 0;
         }
     }
 }
