@@ -31,6 +31,11 @@ namespace FakerInputWrapper
         public static extern bool fakerinput_update_relative_mouse(PFAKERINPUT_HANDLE clientHandle, byte button,
             short x, short y, byte wheelPosition, byte hWheelPosition);
 
+        [DllImport("FakerInputDll.dll")]
+        public static extern bool fakerinput_update_mouse(PFAKERINPUT_HANDLE clientHandle, byte button, ushort x, ushort y,
+            byte wheelPosition, byte hWheelPosition);
+
+
         private PFAKERINPUT_HANDLE deviceHandle;
         private bool connected;
 
@@ -100,6 +105,19 @@ namespace FakerInputWrapper
             if (connected)
             {
                 return fakerinput_update_relative_mouse(deviceHandle, (byte)report.Buttons,
+                    report.MouseX, report.MouseY, report.WheelPosition, report.HWheelPosition);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool UpdateAbsoluteMouse(AbsoluteMouseReport report)
+        {
+            if (connected)
+            {
+                return fakerinput_update_mouse(deviceHandle, (byte)report.Buttons,
                     report.MouseX, report.MouseY, report.WheelPosition, report.HWheelPosition);
             }
             else
