@@ -13,10 +13,10 @@ namespace FakerInputWrapper
         // Enhanced keys
         MyComputer = 1 << 0,
         Calculator = 1 << 1,
-        WWWFav = 1 << 2,
-        WWWSearch = 1 << 3,
-        WWWStop = 1 << 4,
-        WWWBack = 1 << 5,
+        WWWSearch = 1 << 2,
+        WWWHome = 1 << 3,
+        WWWBack = 1 << 4,
+        WWWForward = 1 << 5,
         MediaSelect = 1 << 6,
         Mail = 1 << 7,
 
@@ -28,7 +28,7 @@ namespace FakerInputWrapper
         Mute = 1 << 12,
         VolumeDown = 1 << 13,
         VolumeUp = 1 << 14,
-        WWWHome = 1 << 15,
+        Eject = 1 << 15,
     }
 
     public class KeyboardEnhancedReport
