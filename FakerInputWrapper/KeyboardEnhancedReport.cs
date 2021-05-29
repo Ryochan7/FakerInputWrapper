@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace FakerInputWrapper
 {
     [Flags]
-    public enum EnhancedKey : ushort
+    public enum EnhancedKey : uint
     {
         None,
         // Enhanced keys
@@ -29,6 +29,12 @@ namespace FakerInputWrapper
         VolumeDown = 1 << 13,
         VolumeUp = 1 << 14,
         Eject = 1 << 15,
+
+        ACStop = 1 << 16,
+        ACRefresh = 1 << 17,
+        ACBookmarks = 1 << 18,
+        FastForward = 1 << 19,
+        Rewind = 1 << 20,
     }
 
     public class KeyboardEnhancedReport
@@ -36,10 +42,14 @@ namespace FakerInputWrapper
         private EnhancedKey enhancedKeys;
         //private MultimediaKey mediaKeys;
 
-        public EnhancedKey EnhancedKeys { get => enhancedKeys; set => enhancedKeys = value; }
-        public ushort EnhancedKeysUShort
+        public EnhancedKey EnhancedKeys
         {
-            get => (ushort)enhancedKeys; set => enhancedKeys = (EnhancedKey)value;
+            get => enhancedKeys; set => enhancedKeys = value;
+        }
+
+        public uint EnhancedKeysUInt
+        {
+            get => (uint)enhancedKeys; set => enhancedKeys = (EnhancedKey)value;
         }
         //public MultimediaKey MediaKeys { get => mediaKeys; set => mediaKeys = value; }
 
