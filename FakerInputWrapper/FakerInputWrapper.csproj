@@ -3,6 +3,21 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <Platforms>x64;x86</Platforms>
+    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DefineConstants />
+    <ErrorReport>none</ErrorReport>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+    <DefineConstants />
+    <ErrorReport>none</ErrorReport>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
   </PropertyGroup>
 
 </Project>
