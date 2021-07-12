@@ -192,9 +192,10 @@ namespace FakerInputWrapper
             byte i = 0;
             foreach (KeyboardKey key in pressedKeys)
             {
-                if (i <= 6)
+                if (i < 6)
                 {
-                    keyCodes[i++] = (byte)key;
+                    keyCodes[i] = (byte)key;
+                    i++;
                 }
             }
 
