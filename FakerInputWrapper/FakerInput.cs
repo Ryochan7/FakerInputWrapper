@@ -22,6 +22,9 @@ namespace FakerInputWrapper
         public static extern void fakerinput_disconnect(PFAKERINPUT_HANDLE vmulti);
 
         [DllImport("FakerInputDll.dll")]
+        public static extern UInt32 fakerinput_versionAPINumber(PFAKERINPUT_HANDLE vmulti);
+
+        [DllImport("FakerInputDll.dll")]
         public static extern bool fakerinput_update_keyboard(PFAKERINPUT_HANDLE vmulti, byte shiftKeyFlags, byte[] keyCodes);
 
         [DllImport("FakerInputDll.dll")]
@@ -124,6 +127,13 @@ namespace FakerInputWrapper
             {
                 return false;
             }
+        }
+
+        public UInt32 GetAPIVersion()
+        {
+            UInt32 result = 0;
+            result = fakerinput_versionAPINumber(deviceHandle);
+            return result;
         }
     }
 }
