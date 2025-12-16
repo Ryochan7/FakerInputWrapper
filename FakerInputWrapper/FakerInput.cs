@@ -57,7 +57,8 @@ namespace FakerInputWrapper
 
         public bool Connect()
         {
-            return this.connected = fakerinput_connect(deviceHandle);
+            this.connected = fakerinput_connect(deviceHandle);
+            return this.connected;
         }
 
         public void Disconnect()
